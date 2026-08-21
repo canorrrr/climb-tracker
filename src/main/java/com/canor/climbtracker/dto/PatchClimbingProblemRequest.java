@@ -1,0 +1,55 @@
+package com.canor.climbtracker.dto;
+
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+
+public class PatchClimbingProblemRequest {
+    @Pattern(
+        regexp = ".*\\S.*",
+        message = "climbName must not be blank"
+    )
+    private String climbName; 
+
+
+    @Pattern(
+        regexp = "^V(0|[1-9][0-9]*)$",
+        message = "grade must start with V and contain a number 0 or greater"
+    )
+    private String grade; 
+
+    @Positive(message = "setterId must be positive")
+    private Integer setterId;
+
+    public PatchClimbingProblemRequest(){}
+
+    public PatchClimbingProblemRequest(String climbName, String grade, Integer setterId) {
+        this.climbName = climbName;
+        this.grade = grade; 
+        this.setterId = setterId;
+    }
+
+    public void setClimbName(String climbName) {
+        this.climbName = climbName;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade; 
+    }
+
+    public void setSetterId(Integer setterId) {
+        this.setterId = setterId;
+    }
+
+    public String getClimbName() {
+        return climbName;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public Integer getSetterId() {
+        return setterId;
+    }
+
+}

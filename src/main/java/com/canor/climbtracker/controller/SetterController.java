@@ -1,0 +1,56 @@
+package com.canor.climbtracker.controller;
+
+import java.util.List; 
+
+import org.springframework.web.bind.annotation.RestController;
+
+import com.canor.climbtracker.dto.CreateSetterRequest;
+import com.canor.climbtracker.model.Setter;
+import com.canor.climbtracker.service.SetterService;
+import com.canor.climbtracker.dto.SetterResponse;
+
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
+import jakarta.validation.Valid;
+
+
+@RestController
+public class SetterController {
+    private final SetterService service; 
+
+    public SetterController(SetterService service) {
+        this.service = service;
+    }
+
+    @GetMapping(path = "/setters")
+    public List<Setter> getAllSetters() {
+        return service.getAllSetters();
+    }
+
+    @PostMapping(path = "/setters")
+    public SetterResponse addSetter(@Valid @RequestBody CreateSetterRequest request) {
+        return service.addSetter(request);
+    }
+    
+
+    @GetMapping(path = "/setters/{id}")
+    public Setter getSetterById(@PathVariable int id) {
+        return service.getSetterById(id);
+    }
+
+    @PutMapping(path = "/setters/{id}")
+    public Setter updateSetter(@PathVariable int id, @RequestBody Setter updatedSetter) {
+        return service.updateSetter(id, updatedSetter);
+    }
+
+    @DeleteMapping(path = "/setters/{id}")
+    public Setter deleteSetter(@PathVariable int id) {
+        return service.deleteSetter(id);
+    }
+}
