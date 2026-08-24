@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.canor.climbtracker.dto.CreateSetterRequest;
 import com.canor.climbtracker.dto.PatchSetterRequest;
-import com.canor.climbtracker.model.Setter;
 import com.canor.climbtracker.service.SetterService;
 import com.canor.climbtracker.dto.SetterResponse;
 import com.canor.climbtracker.dto.UpdateSetterRequest;
@@ -57,7 +56,7 @@ public class SetterController {
     }
 
     @DeleteMapping(path = "/setters/{id}")
-    public Setter deleteSetter(@PathVariable int id) {
+    public SetterResponse deleteSetter(@PathVariable int id) {
         return service.deleteSetter(id);
     }
 }

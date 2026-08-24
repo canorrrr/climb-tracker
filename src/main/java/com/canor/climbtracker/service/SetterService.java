@@ -75,12 +75,12 @@ public class SetterService {
         return toResponse(savedSetter);
     }
 
-    public Setter deleteSetter(int id) {
+    public SetterResponse deleteSetter(int id) {
         Setter setter = getSetterOrThrow(id);
 
         setterRepository.delete(setter);
 
-        return setter;
+        return toResponse(setter);
     }
 
     public Setter getSetterEntityById(int id) {
