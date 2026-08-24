@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.canor.climbtracker.dto.CreateSetterRequest;
+import com.canor.climbtracker.dto.PatchSetterRequest;
 import com.canor.climbtracker.dto.SetterResponse;
 import com.canor.climbtracker.dto.UpdateSetterRequest;
 import com.canor.climbtracker.exception.SetterNotFoundException;
@@ -50,6 +51,25 @@ public class SetterService {
         existingSetter.setName(updatedSetter.getName());
         existingSetter.setClimbingStyle(updatedSetter.getClimbingStyle());
         existingSetter.setYearsSetting(updatedSetter.getYearsSetting());
+
+        Setter savedSetter = setterRepository.save(existingSetter);
+        return toResponse(savedSetter);
+    }
+
+    public SetterResponse patchSetter(int id, PatchSetterRequest request) {
+        Setter existingSetter = getSetterOrThrow(id);
+
+        if (request.getName() != null) {
+            existingSetter.setName(request.getName());
+        }
+
+        if (request.getClimbingStyle() != null) {
+            existingSetter.setClimbingStyle(request.getClimbingStyle());
+        }
+
+        if (request.getYearsSetting() != null) {
+            existingSetter.setYearsSetting(request.getYearsSetting());
+        }
 
         Setter savedSetter = setterRepository.save(existingSetter);
         return toResponse(savedSetter);
