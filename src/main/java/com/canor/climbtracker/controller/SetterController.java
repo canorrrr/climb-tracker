@@ -29,7 +29,7 @@ public class SetterController {
     }
 
     @GetMapping(path = "/setters")
-    public List<Setter> getAllSetters() {
+    public List<SetterResponse> getAllSetters() {
         return service.getAllSetters();
     }
 
@@ -40,7 +40,7 @@ public class SetterController {
     
 
     @GetMapping(path = "/setters/{id}")
-    public Setter getSetterById(@PathVariable int id) {
+    public SetterResponse getSetterById(@PathVariable int id) {
         return service.getSetterById(id);
     }
 

@@ -3,6 +3,7 @@ package com.canor.climbtracker.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
+
 import com.canor.climbtracker.dto.CreateSetterRequest;
 import com.canor.climbtracker.dto.SetterResponse;
 import com.canor.climbtracker.exception.SetterNotFoundException;
@@ -29,12 +30,17 @@ public class SetterService {
         return toResponse(savedSetter);
     }
 
-    public List<Setter> getAllSetters() {
-        return setterRepository.findAll();
+    public List<SetterResponse> getAllSetters() {
+        return setterRepository.findAll()
+            .stream()
+            .map(this::toResponse)
+            .toList();
     }
 
-    public Setter getSetterById(int id) {
-        return getSetterOrThrow(id);
+    public SetterResponse getSetterById(int id) {
+        Setter setter = getSetterOrThrow(id);
+
+        return toResponse(setter);
     }
 
     public Setter updateSetter(int id, Setter updatedSetter) {
@@ -53,6 +59,10 @@ public class SetterService {
         setterRepository.delete(setter);
 
         return setter;
+    }
+
+    public Setter getSetterEntityById(int id) {
+        return getSetterOrThrow(id);
     }
 
     private Setter getSetterOrThrow(int id) {

@@ -2,8 +2,6 @@ package com.canor.climbtracker.service;
 
 import java.util.List;
 
-
-
 import org.springframework.stereotype.Service;
 
 import com.canor.climbtracker.dto.ClimbingProblemResponse;
@@ -16,8 +14,6 @@ import com.canor.climbtracker.repository.ClimbingProblemRepository;
 
 
 import com.canor.climbtracker.exception.ClimbingProblemNotFoundException;
-
-
 
 @Service
 public class ClimbingProblemService {
@@ -44,7 +40,7 @@ public class ClimbingProblemService {
     }
 
     public ClimbingProblemResponse addProblem(CreateClimbingProblemRequest request) {
-        Setter setter = setterService.getSetterById(request.getSetterId());
+        Setter setter = setterService.getSetterEntityById(request.getSetterId());
     
         ClimbingProblem problem = new ClimbingProblem();
 
@@ -72,7 +68,7 @@ public class ClimbingProblemService {
 
     public ClimbingProblemResponse updateProblem(int id, UpdateClimbingProblemRequest request) {
         ClimbingProblem existingProblem = getClimbingProblemOrThrow(id);
-        Setter setter = setterService.getSetterById(request.getSetterId());
+        Setter setter = setterService.getSetterEntityById(request.getSetterId());
 
         existingProblem.setClimbName(request.getClimbName());
         existingProblem.setGrade(request.getGrade());
@@ -86,7 +82,7 @@ public class ClimbingProblemService {
         ClimbingProblem existingProblem = getClimbingProblemOrThrow(id);
 
         if (request.getClimbName() != null) {
-            existingProblem.setClimbName((request.getClimbName()));
+            existingProblem.setClimbName(request.getClimbName());
         }
 
         if (request.getGrade() != null) {
@@ -94,7 +90,7 @@ public class ClimbingProblemService {
         }
 
         if (request.getSetterId() != null) {
-            Setter setter = setterService.getSetterById(request.getSetterId());
+            Setter setter = setterService.getSetterEntityById(request.getSetterId());
             existingProblem.setSetter(setter);
         }
 
