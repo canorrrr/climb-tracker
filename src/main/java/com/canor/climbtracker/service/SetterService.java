@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.canor.climbtracker.dto.CreateSetterRequest;
 import com.canor.climbtracker.dto.SetterResponse;
+import com.canor.climbtracker.dto.UpdateSetterRequest;
 import com.canor.climbtracker.exception.SetterNotFoundException;
 import com.canor.climbtracker.model.Setter;
 import com.canor.climbtracker.repository.SetterRepository;
@@ -43,14 +44,15 @@ public class SetterService {
         return toResponse(setter);
     }
 
-    public Setter updateSetter(int id, Setter updatedSetter) {
-        Setter setter = getSetterOrThrow(id);
+    public SetterResponse updateSetter(int id, UpdateSetterRequest updatedSetter) {
+        Setter existingSetter = getSetterOrThrow(id); 
 
-        setter.setName(updatedSetter.getName());
-        setter.setClimbingStyle(updatedSetter.getClimbingStyle());
-        setter.setYearsSetting(updatedSetter.getYearsSetting());
+        existingSetter.setName(updatedSetter.getName());
+        existingSetter.setClimbingStyle(updatedSetter.getClimbingStyle());
+        existingSetter.setYearsSetting(updatedSetter.getYearsSetting());
 
-        return setterRepository.save(setter);
+        Setter savedSetter = setterRepository.save(existingSetter);
+        return toResponse(savedSetter);
     }
 
     public Setter deleteSetter(int id) {
