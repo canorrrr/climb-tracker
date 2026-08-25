@@ -3,6 +3,8 @@ package com.canor.climbtracker.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 
 import com.canor.climbtracker.dto.ClimbingProblemResponse;
 import com.canor.climbtracker.dto.CreateClimbingProblemRequest;
@@ -26,8 +28,12 @@ public class ClimbingProblemService {
         this.setterService = setterService;
     }
 
-    public List<ClimbingProblemResponse> getAllProblems() {
-        return problemRepository.findAll()
+    public List<ClimbingProblemResponse> getAllProblems(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        
+        Page<ClimbingProblem> problemPage = problemRepository.findAll(pageRequest);
+        
+        return problemPage.getContent() 
             .stream()
             .map(this::toResponse)
             .toList();

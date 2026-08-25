@@ -39,8 +39,8 @@ public class ClimbTrackerController{
     }
 
     @GetMapping(path = "/problems")
-    public List<ClimbingProblemResponse> problems() {
-        return service.getAllProblems();
+    public List<ClimbingProblemResponse> problems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return service.getAllProblems(page, size);
     }
 
     //Searching problem by id(index)
