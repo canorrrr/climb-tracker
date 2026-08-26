@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.canor.climbtracker.dto.CreateClimbingProblemRequest;
+import com.canor.climbtracker.dto.PaginatedClimbingProblemResponse;
 import com.canor.climbtracker.model.Greeting;
 import com.canor.climbtracker.service.ClimbingProblemService;
 import com.canor.climbtracker.dto.ClimbingProblemResponse;
@@ -39,7 +40,7 @@ public class ClimbTrackerController{
     }
 
     @GetMapping(path = "/problems")
-    public List<ClimbingProblemResponse> problems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public PaginatedClimbingProblemResponse problems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         return service.getAllProblems(page, size);
     }
 

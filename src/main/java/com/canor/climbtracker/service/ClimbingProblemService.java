@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 
 import com.canor.climbtracker.dto.ClimbingProblemResponse;
 import com.canor.climbtracker.dto.CreateClimbingProblemRequest;
+import com.canor.climbtracker.dto.PaginatedClimbingProblemResponse;
 import com.canor.climbtracker.dto.PatchClimbingProblemRequest;
 import com.canor.climbtracker.dto.UpdateClimbingProblemRequest;
 import com.canor.climbtracker.model.ClimbingProblem;
@@ -28,15 +29,26 @@ public class ClimbingProblemService {
         this.setterService = setterService;
     }
 
-    public List<ClimbingProblemResponse> getAllProblems(int page, int size) {
+    public PaginatedClimbingProblemResponse getAllProblems(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         
         Page<ClimbingProblem> problemPage = problemRepository.findAll(pageRequest);
         
-        return problemPage.getContent() 
-            .stream()
-            .map(this::toResponse)
-            .toList();
+        List<ClimbingProblemResponse> problemResponses = 
+            problemPage.getContent()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+
+        return new PaginatedClimbingProblemResponse(
+            problemResponses,
+            problemPage.getNumber(),
+            problemPage.getSize(),
+            problemPage.getTotalElements(),
+            problemPage.getTotalPages(),
+            problemPage.isFirst(),
+            problemPage.isLast()
+        );
     }
 
     public ClimbingProblemResponse getProblemById(int id) {
