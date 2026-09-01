@@ -40,7 +40,20 @@ public class GlobalExceptionHandler {
         ValidationErrorResponse response = new ValidationErrorResponse(400, "Validation Failed", errors);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 
+    @ExceptionHandler(InvalidSortFieldException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidSortField(InvalidSortFieldException ex) {
+        ApiErrorResponse response = new ApiErrorResponse(400, ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(InvalidSortDirectionException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidSortDirection(InvalidSortDirectionException ex) {
+        ApiErrorResponse response = new ApiErrorResponse(400, ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
     
 }

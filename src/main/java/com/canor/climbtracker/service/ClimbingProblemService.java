@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 
 import com.canor.climbtracker.dto.ClimbingProblemResponse;
@@ -17,6 +18,8 @@ import com.canor.climbtracker.repository.ClimbingProblemRepository;
 
 
 import com.canor.climbtracker.exception.ClimbingProblemNotFoundException;
+import com.canor.climbtracker.exception.InvalidSortDirectionException;
+import com.canor.climbtracker.exception.InvalidSortFieldException;
 
 @Service
 public class ClimbingProblemService {
@@ -29,8 +32,24 @@ public class ClimbingProblemService {
         this.setterService = setterService;
     }
 
-    public PaginatedClimbingProblemResponse getAllProblems(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+    public PaginatedClimbingProblemResponse getAllProblems(int page, int size, String sortBy, String direction) {
+        if(!sortBy.equals("id") && !sortBy.equals("grade") && !sortBy.equals("climbName")) {
+            throw new InvalidSortFieldException(sortBy);
+        }
+        
+        Sort.Direction sortDirection;
+
+        if (direction.equalsIgnoreCase("desc")) {
+            sortDirection = Sort.Direction.DESC;
+        } else if (direction.equalsIgnoreCase("asc")) {
+            sortDirection = Sort.Direction.ASC;
+        } else {
+            throw new InvalidSortDirectionException(direction);
+        }
+
+        Sort sort = Sort.by(sortDirection, sortBy);
+
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
         
         Page<ClimbingProblem> problemPage = problemRepository.findAll(pageRequest);
         

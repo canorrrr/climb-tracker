@@ -11,6 +11,7 @@ import com.canor.climbtracker.model.Greeting;
 import com.canor.climbtracker.service.ClimbingProblemService;
 import com.canor.climbtracker.dto.ClimbingProblemResponse;
 import com.canor.climbtracker.dto.UpdateClimbingProblemRequest;
+import com.canor.climbtracker.exception.InvalidSortFieldException;
 import com.canor.climbtracker.dto.PatchClimbingProblemRequest;
 
 
@@ -40,8 +41,13 @@ public class ClimbTrackerController{
     }
 
     @GetMapping(path = "/problems")
-    public PaginatedClimbingProblemResponse problems(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-        return service.getAllProblems(page, size);
+    public PaginatedClimbingProblemResponse problems(
+            @RequestParam(defaultValue = "0") int page, 
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "climbName") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+        
+        return service.getAllProblems(page, size, sortBy, direction);
     }
 
     //Searching problem by id(index)
