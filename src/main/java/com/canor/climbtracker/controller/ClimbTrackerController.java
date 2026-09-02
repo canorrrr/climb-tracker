@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.canor.climbtracker.dto.CreateClimbingProblemRequest;
 import com.canor.climbtracker.dto.PaginatedClimbingProblemResponse;
-import com.canor.climbtracker.model.Greeting;
 import com.canor.climbtracker.service.ClimbingProblemService;
 import com.canor.climbtracker.dto.ClimbingProblemResponse;
 import com.canor.climbtracker.dto.UpdateClimbingProblemRequest;
-import com.canor.climbtracker.exception.InvalidSortFieldException;
 import com.canor.climbtracker.dto.PatchClimbingProblemRequest;
 
 
@@ -33,12 +31,6 @@ public class ClimbTrackerController{
    public ClimbTrackerController(ClimbingProblemService service) {
     this.service = service;
    }
-
-
-    @GetMapping(path = "/greet")
-    public Greeting greeting() {
-        return new Greeting("Welcome to Climb Tracker", "Canor"); 
-    }
 
     @GetMapping(path = "/problems")
     public PaginatedClimbingProblemResponse problems(
