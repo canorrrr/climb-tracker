@@ -55,5 +55,12 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    @ExceptionHandler(InvalidPaginationException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidPaginationException(InvalidPaginationException ex) {
+        ApiErrorResponse response = new ApiErrorResponse(400, ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
     
 }

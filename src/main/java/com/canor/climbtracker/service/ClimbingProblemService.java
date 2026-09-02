@@ -18,6 +18,7 @@ import com.canor.climbtracker.repository.ClimbingProblemRepository;
 
 
 import com.canor.climbtracker.exception.ClimbingProblemNotFoundException;
+import com.canor.climbtracker.exception.InvalidPaginationException;
 import com.canor.climbtracker.exception.InvalidSortDirectionException;
 import com.canor.climbtracker.exception.InvalidSortFieldException;
 
@@ -33,6 +34,14 @@ public class ClimbingProblemService {
     }
 
     public PaginatedClimbingProblemResponse getAllProblems(int page, int size, String sortBy, String direction) {
+        if (page < 0) {
+            throw new InvalidPaginationException("Page must be 0 or greater");
+        }
+
+        if (size > 100 || size < 1) {
+            throw new InvalidPaginationException("Page size must be between 1 and 100");
+        }
+
         if(!sortBy.equals("id") && !sortBy.equals("grade") && !sortBy.equals("climbName")) {
             throw new InvalidSortFieldException(sortBy);
         }
